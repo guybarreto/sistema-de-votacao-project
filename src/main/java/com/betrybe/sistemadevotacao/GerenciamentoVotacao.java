@@ -1,12 +1,20 @@
 package com.betrybe.sistemadevotacao;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The type Gerenciamento votacao.
+ */
 public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
+
   private final ArrayList<PessoaCandidata> pessoasCandidatas = new ArrayList<>();
   private final ArrayList<PessoaEleitora> pessoasEleitoras = new ArrayList<>();
   private final ArrayList<String> cpfsComputados = new ArrayList<>();
 
+  /**
+   * Instantiates a new Gerenciamento votacao.
+   */
   public GerenciamentoVotacao() {
   }
 
@@ -34,11 +42,12 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
   @Override
   public void votar(String cpfPessoaEleitora, int numeroPessoaCandidata) {
-    for (String cpfComputado : cpfsComputados) {
+    if (cpfsComputados.contains(cpfPessoaEleitora)) {
       System.out.println("Pessoa eleitora já votou!");
       return;
     }
-    for(PessoaCandidata pessoaCandidata : pessoasCandidatas) {
+
+    for (PessoaCandidata pessoaCandidata : pessoasCandidatas) {
       if (numeroPessoaCandidata == pessoaCandidata.getNumero()) {
         pessoaCandidata.receberVoto();
         cpfsComputados.add(cpfPessoaEleitora);
@@ -58,7 +67,8 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
         int votosRecebidos = pessoaCandidata.getVotos();
         double percentualVotos = (votosRecebidos * 100.0) / totalVotos;
 
-        System.out.printf("Nome: %s - %d votos ( %d%% )", pessoaCandidata.getNome(), pessoaCandidata.getVotos(), Math.round(percentualVotos));
+        System.out.printf("Nome: %s - %d votos ( %d%% )", pessoaCandidata.getNome(),
+            pessoaCandidata.getVotos(), Math.round(percentualVotos));
       }
 
       System.out.println("Total de votos: " + totalVotos);
